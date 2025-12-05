@@ -1,0 +1,1174 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="مربطي - أول نظام عربي متكامل لإدارة مزارع الخيول العربية | Mrbty - The first Arabic horse farm management system">
+    <meta name="keywords" content="مربطي, خيول, مزارع خيول, إدارة مزارع, خيول عربية, horse farm, Arabian horses, stable management">
+    <meta property="og:title" content="مربطي | Mrbty - إدارة مزارع الخيول">
+    <meta property="og:description" content="أول نظام عربي متكامل لإدارة مزارع الخيول العربية">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://mrbty.com">
+    <title>مربطي | Mrbty - إدارة مزارع الخيول العربية</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Tajawal:wght@300;400;500;700&family=Cormorant+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --gold: #C9A227;
+            --gold-light: #E8D48A;
+            --gold-dark: #9A7B1A;
+            --brown-dark: #2C1810;
+            --brown: #5D4037;
+            --brown-light: #8B7355;
+            --cream: #FAF6F0;
+            --cream-dark: #EDE4D4;
+            --white: #FFFFFF;
+            --text-dark: #1A1A1A;
+            --text-light: #6B6B6B;
+            
+            --font-arabic-display: 'Amiri', serif;
+            --font-arabic-body: 'Tajawal', sans-serif;
+            --font-english: 'Cormorant Garamond', serif;
+            
+            --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-arabic-body);
+            background: var(--cream);
+            color: var(--text-dark);
+            line-height: 1.8;
+            overflow-x: hidden;
+        }
+
+        body.en {
+            direction: ltr;
+        }
+
+        /* Language Switcher */
+        .lang-switcher {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            display: flex;
+            gap: 8px;
+            background: var(--white);
+            padding: 6px;
+            border-radius: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        body.en .lang-switcher {
+            left: auto;
+            right: 20px;
+        }
+
+        .lang-btn {
+            padding: 8px 16px;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            border-radius: 20px;
+            font-family: var(--font-arabic-body);
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-light);
+            transition: var(--transition);
+        }
+
+        .lang-btn.active {
+            background: var(--gold);
+            color: var(--white);
+        }
+
+        .lang-btn:hover:not(.active) {
+            background: var(--cream-dark);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 40px 20px;
+            position: relative;
+            background: 
+                linear-gradient(135deg, rgba(250,246,240,0.97) 0%, rgba(237,228,212,0.95) 100%),
+                url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23C9A227' fill-opacity='0.06'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--gold-dark), var(--gold), var(--gold-light), var(--gold), var(--gold-dark));
+        }
+
+        /* Logo */
+        .logo-container {
+            margin-bottom: 30px;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        .logo {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            box-shadow: 
+                0 10px 40px rgba(201, 162, 39, 0.3),
+                inset 0 -2px 10px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        .logo::after {
+            content: '';
+            position: absolute;
+            inset: 4px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+        }
+
+        .logo svg {
+            width: 60px;
+            height: 60px;
+            fill: var(--white);
+        }
+
+        .brand-name {
+            font-family: var(--font-arabic-display);
+            font-size: clamp(3rem, 8vw, 5rem);
+            font-weight: 700;
+            color: var(--brown-dark);
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 0 var(--gold-light);
+        }
+
+        body.en .brand-name {
+            font-family: var(--font-english);
+            letter-spacing: 8px;
+            text-transform: uppercase;
+        }
+
+        /* Tagline */
+        .tagline {
+            font-size: clamp(1.1rem, 3vw, 1.4rem);
+            color: var(--brown);
+            margin-bottom: 15px;
+            font-weight: 300;
+            animation: fadeInUp 1s ease-out 0.3s both;
+        }
+
+        .tagline-sub {
+            font-size: 1rem;
+            color: var(--text-light);
+            margin-bottom: 50px;
+            animation: fadeInUp 1s ease-out 0.5s both;
+        }
+
+        /* Early Access Badge */
+        .early-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(135deg, var(--brown-dark) 0%, var(--brown) 100%);
+            color: var(--gold-light);
+            padding: 12px 28px;
+            border-radius: 50px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            margin-bottom: 40px;
+            animation: fadeInUp 1s ease-out 0.7s both;
+            box-shadow: 0 4px 20px rgba(44, 24, 16, 0.3);
+        }
+
+        .early-badge .icon {
+            font-size: 1.2rem;
+        }
+
+        /* Signup Form */
+        .signup-container {
+            width: 100%;
+            max-width: 500px;
+            animation: fadeInUp 1s ease-out 0.9s both;
+        }
+
+        .signup-form {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        body.en .signup-form {
+            flex-direction: row;
+        }
+
+        .signup-input {
+            flex: 1;
+            padding: 18px 24px;
+            border: 2px solid var(--cream-dark);
+            border-radius: 12px;
+            font-size: 1rem;
+            font-family: var(--font-arabic-body);
+            background: var(--white);
+            transition: var(--transition);
+            text-align: right;
+        }
+
+        body.en .signup-input {
+            text-align: left;
+        }
+
+        .signup-input:focus {
+            outline: none;
+            border-color: var(--gold);
+            box-shadow: 0 0 0 4px rgba(201, 162, 39, 0.1);
+        }
+
+        .signup-input::placeholder {
+            color: var(--text-light);
+        }
+
+        .signup-btn {
+            padding: 18px 36px;
+            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+            color: var(--white);
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            font-family: var(--font-arabic-body);
+            cursor: pointer;
+            transition: var(--transition);
+            white-space: nowrap;
+            box-shadow: 0 4px 15px rgba(201, 162, 39, 0.3);
+        }
+
+        .signup-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(201, 162, 39, 0.4);
+        }
+
+        .signup-note {
+            font-size: 0.85rem;
+            color: var(--text-light);
+        }
+
+        .signup-note strong {
+            color: var(--gold-dark);
+        }
+
+        /* Counter Section */
+        .counter-section {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 50px;
+            animation: fadeInUp 1s ease-out 1.1s both;
+        }
+
+        .counter-item {
+            text-align: center;
+        }
+
+        .counter-number {
+            font-family: var(--font-english);
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--gold-dark);
+            line-height: 1;
+        }
+
+        .counter-label {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            margin-top: 5px;
+        }
+
+        .counter-divider {
+            width: 1px;
+            background: var(--cream-dark);
+        }
+
+        /* Scroll Indicator */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+        }
+
+        .scroll-indicator svg {
+            width: 30px;
+            height: 30px;
+            stroke: var(--brown-light);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 100px 20px;
+            background: var(--white);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 70px;
+        }
+
+        .section-title {
+            font-family: var(--font-arabic-display);
+            font-size: clamp(2rem, 5vw, 2.8rem);
+            color: var(--brown-dark);
+            margin-bottom: 15px;
+        }
+
+        body.en .section-title {
+            font-family: var(--font-english);
+        }
+
+        .section-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-light);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            background: var(--cream);
+            padding: 40px 30px;
+            border-radius: 20px;
+            text-align: center;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--gold), var(--gold-light));
+            transform: scaleX(0);
+            transition: var(--transition);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+        }
+
+        .feature-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 100%);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 25px;
+            font-size: 2rem;
+        }
+
+        .feature-title {
+            font-family: var(--font-arabic-display);
+            font-size: 1.3rem;
+            color: var(--brown-dark);
+            margin-bottom: 12px;
+        }
+
+        body.en .feature-title {
+            font-family: var(--font-english);
+            font-weight: 600;
+        }
+
+        .feature-desc {
+            font-size: 0.95rem;
+            color: var(--text-light);
+            line-height: 1.7;
+        }
+
+        /* Benefits Section */
+        .benefits {
+            padding: 100px 20px;
+            background: linear-gradient(135deg, var(--brown-dark) 0%, var(--brown) 100%);
+            color: var(--white);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .benefits::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23C9A227' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
+            opacity: 0.5;
+        }
+
+        .benefits .container {
+            position: relative;
+            z-index: 1;
+        }
+
+        .benefits .section-title {
+            color: var(--gold-light);
+        }
+
+        .benefits .section-subtitle {
+            color: rgba(255,255,255,0.7);
+        }
+
+        .benefits-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-top: 50px;
+        }
+
+        .benefit-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+        }
+
+        body.en .benefit-item {
+            flex-direction: row;
+        }
+
+        .benefit-check {
+            width: 40px;
+            height: 40px;
+            min-width: 40px;
+            background: var(--gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .benefit-text h4 {
+            font-family: var(--font-arabic-display);
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+            color: var(--gold-light);
+        }
+
+        body.en .benefit-text h4 {
+            font-family: var(--font-english);
+        }
+
+        .benefit-text p {
+            font-size: 0.95rem;
+            color: rgba(255,255,255,0.7);
+            line-height: 1.6;
+        }
+
+        /* CTA Section */
+        .cta {
+            padding: 100px 20px;
+            background: var(--cream);
+            text-align: center;
+        }
+
+        .cta-box {
+            max-width: 600px;
+            margin: 0 auto;
+            background: var(--white);
+            padding: 60px 40px;
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.08);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(90deg, var(--gold-dark), var(--gold), var(--gold-light), var(--gold), var(--gold-dark));
+        }
+
+        .cta-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+
+        .cta h2 {
+            font-family: var(--font-arabic-display);
+            font-size: 2rem;
+            color: var(--brown-dark);
+            margin-bottom: 15px;
+        }
+
+        body.en .cta h2 {
+            font-family: var(--font-english);
+        }
+
+        .cta p {
+            color: var(--text-light);
+            margin-bottom: 30px;
+        }
+
+        .cta .signup-form {
+            max-width: 450px;
+            margin: 0 auto;
+        }
+
+        /* Footer */
+        .footer {
+            padding: 40px 20px;
+            background: var(--brown-dark);
+            color: rgba(255,255,255,0.6);
+            text-align: center;
+        }
+
+        .footer-brand {
+            font-family: var(--font-arabic-display);
+            font-size: 1.5rem;
+            color: var(--gold);
+            margin-bottom: 15px;
+        }
+
+        body.en .footer-brand {
+            font-family: var(--font-english);
+            letter-spacing: 4px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.6);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--gold);
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .social-link {
+            width: 44px;
+            height: 44px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            text-decoration: none;
+            transition: var(--transition);
+            font-size: 1.2rem;
+        }
+
+        .social-link:hover {
+            background: var(--gold);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            font-size: 0.85rem;
+        }
+
+        /* Success Message */
+        .success-message {
+            display: none;
+            background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+            color: white;
+            padding: 20px 30px;
+            border-radius: 12px;
+            margin-top: 20px;
+            animation: fadeInUp 0.5s ease-out;
+        }
+
+        .success-message.show {
+            display: block;
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateX(-50%) translateY(0);
+            }
+            40% {
+                transform: translateX(-50%) translateY(-10px);
+            }
+            60% {
+                transform: translateX(-50%) translateY(-5px);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .signup-form {
+                flex-direction: column;
+            }
+
+            .counter-section {
+                gap: 20px;
+            }
+
+            .counter-number {
+                font-size: 2rem;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-box {
+                padding: 40px 25px;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+
+        /* Language-specific content */
+        .ar-content { display: block; }
+        .en-content { display: none; }
+
+        body.en .ar-content { display: none; }
+        body.en .en-content { display: block; }
+    </style>
+</head>
+<body>
+    <!-- Language Switcher -->
+    <div class="lang-switcher">
+        <button class="lang-btn active" data-lang="ar">عربي</button>
+        <button class="lang-btn" data-lang="en">English</button>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="logo-container">
+            <div class="logo">
+                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M75 25c-5-8-15-12-25-10-8 2-15 8-18 15-2 5-2 10 0 15l-7 10c-2 3-2 7 1 10l5 5c3 3 7 3 10 1l8-6c5 2 11 2 16-1 8-4 14-12 15-21 1-7-1-13-5-18zm-30 35c-4 0-7-3-7-7s3-7 7-7 7 3 7 7-3 7-7 7z"/>
+                </svg>
+            </div>
+            <h1 class="brand-name">
+                <span class="ar-content">مربطي</span>
+                <span class="en-content">MRBTY</span>
+            </h1>
+        </div>
+
+        <p class="tagline">
+            <span class="ar-content">أول نظام عربي متكامل لإدارة مزارع الخيول العربية</span>
+            <span class="en-content">The First Arabic Horse Farm Management System</span>
+        </p>
+        <p class="tagline-sub">
+            <span class="ar-content">سجلات • تناسل • صحة • مسابقات — كل شيء في مكان واحد</span>
+            <span class="en-content">Records • Breeding • Health • Competitions — All in One Place</span>
+        </p>
+
+        <div class="early-badge">
+            <span class="icon">🎁</span>
+            <span class="ar-content">أول ٥٠ مسجل يحصلون على ٦ شهور مجاناً!</span>
+            <span class="en-content">First 50 signups get 6 months FREE!</span>
+        </div>
+
+        <div class="signup-container">
+            <form class="signup-form" id="hero-form">
+                <input type="email" class="signup-input" placeholder="البريد الإلكتروني" required id="hero-email">
+                <button type="submit" class="signup-btn">
+                    <span class="ar-content">سجلني</span>
+                    <span class="en-content">Join Waitlist</span>
+                </button>
+            </form>
+            <p class="signup-note">
+                <span class="ar-content">⏰ المقاعد المتبقية: <strong>47 من 50</strong> — سجل الآن!</span>
+                <span class="en-content">⏰ Spots remaining: <strong>47 of 50</strong> — Sign up now!</span>
+            </p>
+            <div class="success-message" id="hero-success">
+                <span class="ar-content">✅ تم التسجيل بنجاح! سنتواصل معك قريباً.</span>
+                <span class="en-content">✅ Successfully registered! We'll contact you soon.</span>
+            </div>
+        </div>
+
+        <div class="counter-section">
+            <div class="counter-item">
+                <div class="counter-number" id="days">--</div>
+                <div class="counter-label">
+                    <span class="ar-content">يوم</span>
+                    <span class="en-content">Days</span>
+                </div>
+            </div>
+            <div class="counter-divider"></div>
+            <div class="counter-item">
+                <div class="counter-number" id="hours">--</div>
+                <div class="counter-label">
+                    <span class="ar-content">ساعة</span>
+                    <span class="en-content">Hours</span>
+                </div>
+            </div>
+            <div class="counter-divider"></div>
+            <div class="counter-item">
+                <div class="counter-number" id="minutes">--</div>
+                <div class="counter-label">
+                    <span class="ar-content">دقيقة</span>
+                    <span class="en-content">Minutes</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="scroll-indicator">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 5v14M19 12l-7 7-7-7"/>
+            </svg>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <span class="ar-content">كل ما تحتاجه لإدارة مربطك</span>
+                    <span class="en-content">Everything You Need to Manage Your Stable</span>
+                </h2>
+                <p class="section-subtitle">
+                    <span class="ar-content">نظام شامل صُمم خصيصاً لمربي الخيول العربية</span>
+                    <span class="en-content">A comprehensive system designed specifically for Arabian horse breeders</span>
+                </p>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🐴</div>
+                    <h3 class="feature-title">
+                        <span class="ar-content">سجلات الخيل</span>
+                        <span class="en-content">Horse Records</span>
+                    </h3>
+                    <p class="feature-desc">
+                        <span class="ar-content">ملف شامل لكل حصان: البيانات الأساسية، الصور، المستندات، وشجرة النسب الكاملة</span>
+                        <span class="en-content">Complete profile for each horse: basic data, photos, documents, and full pedigree tree</span>
+                    </p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🧬</div>
+                    <h3 class="feature-title">
+                        <span class="ar-content">التناسل والنسب</span>
+                        <span class="en-content">Breeding & Pedigree</span>
+                    </h3>
+                    <p class="feature-desc">
+                        <span class="ar-content">تتبع الطلوقات، متابعة الحمل، تسجيل الولادات، وإدارة شجرة النسب بالكامل</span>
+                        <span class="en-content">Track matings, monitor pregnancies, record births, and manage the entire pedigree tree</span>
+                    </p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">💉</div>
+                    <h3 class="feature-title">
+                        <span class="ar-content">الصحة والعلاج</span>
+                        <span class="en-content">Health & Treatment</span>
+                    </h3>
+                    <p class="feature-desc">
+                        <span class="ar-content">تطعيمات، علاجات، فحوصات مع تذكيرات تلقائية لكل المواعيد المهمة</span>
+                        <span class="en-content">Vaccinations, treatments, checkups with automatic reminders for all important dates</span>
+                    </p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">✂️</div>
+                    <h3 class="feature-title">
+                        <span class="ar-content">الحلاقة والبيطار</span>
+                        <span class="en-content">Grooming & Farrier</span>
+                    </h3>
+                    <p class="feature-desc">
+                        <span class="ar-content">جدولة مواعيد الحلاقة والبيطار مع تنبيهات قبل الموعد</span>
+                        <span class="en-content">Schedule grooming and farrier appointments with advance notifications</span>
+                    </p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🏆</div>
+                    <h3 class="feature-title">
+                        <span class="ar-content">المسابقات</span>
+                        <span class="en-content">Competitions</span>
+                    </h3>
+                    <p class="feature-desc">
+                        <span class="ar-content">سجل كامل للمشاركات والنتائج في مسابقات جمال الخيل العربي</span>
+                        <span class="en-content">Complete record of participations and results in Arabian horse beauty shows</span>
+                    </p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <h3 class="feature-title">
+                        <span class="ar-content">يعمل بدون إنترنت</span>
+                        <span class="en-content">Works Offline</span>
+                    </h3>
+                    <p class="feature-desc">
+                        <span class="ar-content">استخدم التطبيق في أي مكان حتى بدون اتصال بالإنترنت</span>
+                        <span class="en-content">Use the app anywhere, even without an internet connection</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section class="benefits">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <span class="ar-content">لماذا مربطي؟</span>
+                    <span class="en-content">Why Mrbty?</span>
+                </h2>
+                <p class="section-subtitle">
+                    <span class="ar-content">مصمم من مربين للمربين</span>
+                    <span class="en-content">Designed by breeders, for breeders</span>
+                </p>
+            </div>
+
+            <div class="benefits-list">
+                <div class="benefit-item">
+                    <div class="benefit-check">✓</div>
+                    <div class="benefit-text">
+                        <h4>
+                            <span class="ar-content">باللغة العربية</span>
+                            <span class="en-content">Arabic Language</span>
+                        </h4>
+                        <p>
+                            <span class="ar-content">واجهة كاملة بالعربية مع دعم للإنجليزية — أول نظام من نوعه</span>
+                            <span class="en-content">Full Arabic interface with English support — the first of its kind</span>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="benefit-item">
+                    <div class="benefit-check">✓</div>
+                    <div class="benefit-text">
+                        <h4>
+                            <span class="ar-content">مصمم للخيول العربية</span>
+                            <span class="en-content">Designed for Arabian Horses</span>
+                        </h4>
+                        <p>
+                            <span class="ar-content">يفهم متطلبات مسابقات الجمال وشهادات النسب والتناسل</span>
+                            <span class="en-content">Understands beauty show requirements, pedigree certificates, and breeding</span>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="benefit-item">
+                    <div class="benefit-check">✓</div>
+                    <div class="benefit-text">
+                        <h4>
+                            <span class="ar-content">سهل الاستخدام</span>
+                            <span class="en-content">Easy to Use</span>
+                        </h4>
+                        <p>
+                            <span class="ar-content">واجهة بسيطة تناسب الجميع — لا تحتاج خبرة تقنية</span>
+                            <span class="en-content">Simple interface suitable for everyone — no technical experience needed</span>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="benefit-item">
+                    <div class="benefit-check">✓</div>
+                    <div class="benefit-text">
+                        <h4>
+                            <span class="ar-content">تذكيرات ذكية</span>
+                            <span class="en-content">Smart Reminders</span>
+                        </h4>
+                        <p>
+                            <span class="ar-content">لن تنسى موعد تطعيم أو حلاقة أو فحص حمل أبداً</span>
+                            <span class="en-content">Never forget a vaccination, grooming, or pregnancy checkup date again</span>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="benefit-item">
+                    <div class="benefit-check">✓</div>
+                    <div class="benefit-text">
+                        <h4>
+                            <span class="ar-content">آمن ومحمي</span>
+                            <span class="en-content">Safe & Secure</span>
+                        </h4>
+                        <p>
+                            <span class="ar-content">بياناتك محمية ومشفرة — ملكك أنت فقط</span>
+                            <span class="en-content">Your data is protected and encrypted — yours alone</span>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="benefit-item">
+                    <div class="benefit-check">✓</div>
+                    <div class="benefit-text">
+                        <h4>
+                            <span class="ar-content">أسعار مناسبة</span>
+                            <span class="en-content">Affordable Pricing</span>
+                        </h4>
+                        <p>
+                            <span class="ar-content">باقات تناسب جميع أحجام المزارع — من الصغيرة للكبيرة</span>
+                            <span class="en-content">Plans suitable for all farm sizes — from small to large</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="cta-box">
+            <div class="cta-icon">🐎</div>
+            <h2>
+                <span class="ar-content">كن من أوائل المستخدمين</span>
+                <span class="en-content">Be Among the First Users</span>
+            </h2>
+            <p>
+                <span class="ar-content">سجل الآن واحصل على وصول مبكر حصري مع خصومات خاصة للمؤسسين</span>
+                <span class="en-content">Sign up now for exclusive early access with special founder discounts</span>
+            </p>
+            <form class="signup-form" id="cta-form">
+                <input type="email" class="signup-input" placeholder="البريد الإلكتروني" required id="cta-email">
+                <button type="submit" class="signup-btn">
+                    <span class="ar-content">سجلني</span>
+                    <span class="en-content">Join Now</span>
+                </button>
+            </form>
+            <div class="success-message" id="cta-success">
+                <span class="ar-content">✅ تم التسجيل بنجاح! سنتواصل معك قريباً.</span>
+                <span class="en-content">✅ Successfully registered! We'll contact you soon.</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-brand">
+            <span class="ar-content">مربطي</span>
+            <span class="en-content">MRBTY</span>
+        </div>
+        
+        <div class="social-links">
+            <a href="#" class="social-link" title="WhatsApp">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                </svg>
+            </a>
+            <a href="#" class="social-link" title="Instagram">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                </svg>
+            </a>
+            <a href="#" class="social-link" title="Twitter">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                </svg>
+            </a>
+            <a href="mailto:hello@mrbty.com" class="social-link" title="Email">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                </svg>
+            </a>
+        </div>
+
+        <p class="copyright">
+            <span class="ar-content">© ٢٠٢٥ مربطي. جميع الحقوق محفوظة.</span>
+            <span class="en-content">© 2025 Mrbty. All rights reserved.</span>
+        </p>
+    </footer>
+
+    <script>
+        // Language Switcher
+        const langBtns = document.querySelectorAll('.lang-btn');
+        const body = document.body;
+        const htmlEl = document.documentElement;
+
+        langBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const lang = btn.dataset.lang;
+                
+                langBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                if (lang === 'en') {
+                    body.classList.add('en');
+                    htmlEl.lang = 'en';
+                    htmlEl.dir = 'ltr';
+                    document.querySelectorAll('.signup-input').forEach(input => {
+                        input.placeholder = 'Your email address';
+                    });
+                } else {
+                    body.classList.remove('en');
+                    htmlEl.lang = 'ar';
+                    htmlEl.dir = 'rtl';
+                    document.querySelectorAll('.signup-input').forEach(input => {
+                        input.placeholder = 'البريد الإلكتروني';
+                    });
+                }
+            });
+        });
+
+        // Countdown Timer (set launch date to 90 days from now)
+        const launchDate = new Date();
+        launchDate.setDate(launchDate.getDate() + 90);
+
+        function updateCountdown() {
+            const now = new Date();
+            const diff = launchDate - now;
+            
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            
+            document.getElementById('days').textContent = days.toString().padStart(2, '0');
+            document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+            document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+        }
+
+        updateCountdown();
+        setInterval(updateCountdown, 60000);
+
+        // Form Submission (stores in localStorage for demo, replace with actual backend)
+        function handleFormSubmit(formId, successId) {
+            const form = document.getElementById(formId);
+            const success = document.getElementById(successId);
+            
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const email = form.querySelector('input[type="email"]').value;
+                
+                // Store email (replace with actual API call)
+                let emails = JSON.parse(localStorage.getItem('mrbty_emails') || '[]');
+                if (!emails.includes(email)) {
+                    emails.push(email);
+                    localStorage.setItem('mrbty_emails', JSON.stringify(emails));
+                }
+                
+                // Show success message
+                form.style.display = 'none';
+                success.classList.add('show');
+                
+                // Reset after 5 seconds
+                setTimeout(() => {
+                    form.style.display = 'flex';
+                    success.classList.remove('show');
+                    form.reset();
+                }, 5000);
+            });
+        }
+
+        handleFormSubmit('hero-form', 'hero-success');
+        handleFormSubmit('cta-form', 'cta-success');
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.feature-card, .benefit-item').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'all 0.6s ease-out';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
