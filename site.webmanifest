@@ -1,0 +1,22 @@
+{
+  "name": "مربطي - إدارة مزارع الخيول",
+  "short_name": "مربطي",
+  "description": "أول نظام عربي متكامل لإدارة مزارع الخيول العربية",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#2C1810",
+  "theme_color": "#C9A227",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
