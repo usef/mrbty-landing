@@ -66,8 +66,8 @@
 
         <div class="early-badge">
             <span class="icon">🎁</span>
-            <span class="ar-content">أول ٥٠ مسجل يحصلون على ٦ شهور مجاناً!</span>
-            <span class="en-content">First 50 signups get 6 months FREE!</span>
+            <span class="ar-content">جرّب مجاناً لمدة أسبوعين — بدون التزام!</span>
+            <span class="en-content">Try free for 2 weeks — No commitment!</span>
         </div>
 
         <div class="signup-container">
@@ -79,8 +79,8 @@
                 </button>
             </form>
             <p class="signup-note">
-                <span class="ar-content">⏰ المقاعد المتبقية: <strong>47 من 50</strong> — سجل الآن!</span>
-                <span class="en-content">⏰ Spots remaining: <strong>47 of 50</strong> — Sign up now!</span>
+                <span class="ar-content">🚀 سجّل الآن وكن من أوائل المستخدمين!</span>
+                <span class="en-content">🚀 Sign up now and be an early adopter!</span>
             </p>
             <div class="success-message" id="hero-success">
                 <span class="ar-content">✅ تم التسجيل بنجاح! سنتواصل معك قريباً.</span>
@@ -406,9 +406,8 @@
             });
         });
 
-        // Countdown Timer (set launch date to 90 days from now)
-        const launchDate = new Date();
-        launchDate.setDate(launchDate.getDate() + 90);
+        // Countdown Timer - Fixed launch date: March 6, 2026 (3 months from Dec 6, 2025)
+        const launchDate = new Date('2026-03-06T00:00:00');
 
         function updateCountdown() {
             const now = new Date();
