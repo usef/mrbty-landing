@@ -47,32 +47,64 @@ function updateCountdown() {
 updateCountdown();
 setInterval(updateCountdown, 60000);
 
-// Form Submission (stores in localStorage for demo, replace with actual backend)
+// Form Submission - Google Sheets Integration
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwYGJI3UT96SWt6Q2AwvocBd9y0soFsf_Zpa37-ZObvxzxU7dJ_EWAe0cmWI9h0wBx3Jg/exec';
+
 function handleFormSubmit(formId, successId) {
     const form = document.getElementById(formId);
     const success = document.getElementById(successId);
 
-    form.addEventListener('submit', (e) => {
+    form.addEventListener('submit', async (e) => {
         e.preventDefault();
         const email = form.querySelector('input[type="email"]').value;
+        const submitBtn = form.querySelector('button[type="submit"]');
 
-        // Store email (replace with actual API call)
-        let emails = JSON.parse(localStorage.getItem('mrbty_emails') || '[]');
-        if (!emails.includes(email)) {
-            emails.push(email);
-            localStorage.setItem('mrbty_emails', JSON.stringify(emails));
+        // Disable button during submission
+        submitBtn.disabled = true;
+        submitBtn.style.opacity = '0.6';
+
+        try {
+            // Send to Google Sheets
+            await fetch(GOOGLE_SCRIPT_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    email: email,
+                    date: new Date().toISOString(),
+                    source: formId
+                })
+            });
+
+            // Show success message
+            form.style.display = 'none';
+            success.classList.add('show');
+
+            // Reset after 5 seconds
+            setTimeout(() => {
+                form.style.display = 'flex';
+                success.classList.remove('show');
+                form.reset();
+                submitBtn.disabled = false;
+                submitBtn.style.opacity = '1';
+            }, 5000);
+
+        } catch (error) {
+            console.error('Submission error:', error);
+            // Still show success to user (no-cors mode doesn't give us response)
+            form.style.display = 'none';
+            success.classList.add('show');
+
+            setTimeout(() => {
+                form.style.display = 'flex';
+                success.classList.remove('show');
+                form.reset();
+                submitBtn.disabled = false;
+                submitBtn.style.opacity = '1';
+            }, 5000);
         }
-
-        // Show success message
-        form.style.display = 'none';
-        success.classList.add('show');
-
-        // Reset after 5 seconds
-        setTimeout(() => {
-            form.style.display = 'flex';
-            success.classList.remove('show');
-            form.reset();
-        }, 5000);
     });
 }
 

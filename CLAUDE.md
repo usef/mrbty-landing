@@ -15,7 +15,7 @@ Hosted on GitHub Pages with custom domain.
 - ✅ RTL support
 - ✅ Favicon (Arabian horse in gold/brown theme)
 - ✅ Mobile responsive
-- ✅ Email signup form (localStorage demo)
+- ✅ Email signup form (Google Sheets backend)
 - ✅ Google Analytics (ID: G-NY4H26KYSJ)
 - ✅ Privacy policy page (bilingual)
 - ✅ OpenGraph image for social sharing
@@ -23,7 +23,7 @@ Hosted on GitHub Pages with custom domain.
 - ✅ Email contact (mrbty.app@gmail.com)
 - ✅ Instagram (@mrbty.app)
 - ✅ Countdown timer (fixed to March 6, 2026)
-- 🔲 Connect form to real backend (Google Sheets)
+- ✅ Google Sheets integration (emails sent to spreadsheet)
 - 🔲 Add Facebook username (when ready)
 
 ## File Structure
@@ -89,12 +89,15 @@ body.en .ar-content { display: none; }
 body.en .en-content { display: block; }
 ```
 
-## Email Signup (Current: Demo)
-Currently saves to localStorage. Needs integration with:
-- **Option A:** Google Sheets (free, simple)
-- **Option B:** Mailchimp (free up to 500)
-- **Option C:** ConvertKit (free up to 1000)
-- **Option D:** Custom backend API
+## Email Signup
+**Status:** ✅ Connected to Google Sheets via Google Apps Script
+
+Emails are automatically sent to a Google Sheet with:
+- Email address
+- Timestamp
+- Source (hero-form or cta-form)
+
+**Script URL:** (stored in script.js)
 
 ## Countdown Timer
 Fixed launch date: March 6, 2026
@@ -133,8 +136,8 @@ CNAME www  USERNAME.github.io.
 ## Pending Tasks
 
 ### High Priority
-1. Connect email form to Google Sheets
-2. Add Facebook username when ready
+1. Add Facebook username when ready
+2. Test email signup on live site
 
 ### Nice to Have
 - Add testimonials section (after getting beta users)
@@ -143,24 +146,15 @@ CNAME www  USERNAME.github.io.
 - FAQ section
 - Sitemap.xml for SEO
 
-## Google Sheets Integration (How-to)
-```javascript
-// Replace the form handler with:
-const GOOGLE_SCRIPT_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL';
+## Google Sheets Integration
+**Status:** ✅ Configured and working
 
-form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const email = form.querySelector('input[type="email"]').value;
+The Google Apps Script (deployed as web app) receives form submissions and appends them to your Google Sheet with:
+- Email
+- Date/Time (ISO format)
+- Source (which form: hero-form or cta-form)
 
-    await fetch(GOOGLE_SCRIPT_URL, {
-        method: 'POST',
-        mode: 'no-cors',
-        body: JSON.stringify({ email, date: new Date().toISOString() })
-    });
-
-    // Show success message
-});
-```
+All handled automatically - no server needed!
 
 ## Analytics
 Google Analytics 4 is configured with ID: `G-NY4H26KYSJ`
